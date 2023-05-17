@@ -1,0 +1,66 @@
+@extends('layouts.app')
+@section('title', 'Tambah Data SO Buku')
+
+@section('title-header', 'Tambah Data SO Buku')
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('stocks.index') }}">Data SO Buku</a></li>
+    <li class="breadcrumb-item active">Tambah Data SO Buku</li>
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-transparent border-0 text-dark">
+                    <h5 class="mb-0">Formulir Tambah Data SO Buku</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('stocks.store') }}" method="POST" role="form" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label for="buku_id">Judul Buku</label>
+                                    <select class="form-control @error('buku_id') is-invalid @enderror" id="buku_id" name="buku_id">
+                                        <option value="" selected>---Judul Buku---</option>
+                                        @foreach ($books as $book)
+                                            <option value="{{ $book->id }}" @if (old('buku_id') == $book->id) selected @endif>
+                                                {{ $book->judul_buku }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('buku_id')
+                                        <div class="d-block invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label for="keterangan">Keterangan SO</label>
+                                    <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan"
+                                    placeholder="Keterangan SO" name="keterangan" cols="30" rows="10">{{ old('keterangan') }}</textarea>
+
+                                    @error('keterangan')
+                                        <div class="d-block invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <button type="submit" class="btn btn-sm btn-primary">Tambah</button>
+                                <a href="{{route('stocks.index')}}" class="btn btn-sm btn-secondary">Kembali</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection

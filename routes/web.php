@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReturnBookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\StockOpnameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,4 +44,5 @@ Route::middleware('auth')->group(function() {
     Route::post('/borrows/return-book/{borrowId}', [BorrowController::class, 'returnBook'])->name('borrows.return');
     Route::resource('borrows', BorrowController::class);
     Route::resource('returns', ReturnBookController::class);
+    Route::resource('stocks', StockOpnameController::class);
 });
