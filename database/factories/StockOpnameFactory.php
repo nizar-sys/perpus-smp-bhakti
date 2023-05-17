@@ -20,6 +20,7 @@ class StockOpnameFactory extends Factory
             'buku_id' => $this->faker->numberBetween(1, 100),
             'tanggal' => $this->faker->date(),
             'keterangan' => $this->faker->text(),
+            'jumlah_buku' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

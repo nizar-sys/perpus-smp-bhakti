@@ -51,7 +51,18 @@ class StockOpnameController extends Controller
             'created_at' => now(),
         ];
 
+        $book = Book::findOrFail($request->buku_id);
+
+        $jumlahSOBaru = $request->jumlah_buku;
+
+        if ((int)$jumlahSOBaru > $book->jumlah_buku) {
+            return redirect(route('stocks.index'))->with('error', 'Jumlah so buku tidak boleh lebih besar dari jumlah buku.');
+        }
+
         $stock = StockOpname::create($validated);
+        $book->update([
+            'jumlah_buku' => $book->jumlah_buku - $request->jumlah_buku,
+        ]);
 
         return redirect(route('stocks.index'))->with('success', 'Data SO buku berhasil ditambahkan.');
     }
@@ -93,10 +104,21 @@ class StockOpnameController extends Controller
         $validated = $request->validated() + [
             'updated_at' => now(),
         ];
-
+        $book = Book::findOrFail($request->buku_id);
         $stock = StockOpname::findOrFail($id);
 
+        $jumlahSOAwal = $stock->jumlah_buku;
+        $jumlahSOBaru = $request->jumlah_buku;
+
+        if((int)$jumlahSOBaru > (int)$jumlahSOAwal){
+            return redirect(route('stocks.index'))->with('error', 'Jumlah so buku tidak boleh lebih besar dari jumlah so buku sebelumnya.');
+        }
+
         $stock->update($validated);
+
+        $book->update([
+            'jumlah_buku' => $book->jumlah_buku += $jumlahSOAwal - $jumlahSOBaru,
+        ]);
 
         return redirect(route('stocks.index'))->with('success', 'Data SO buku berhasil diperbarui.');
     }
@@ -110,6 +132,11 @@ class StockOpnameController extends Controller
     public function destroy($id)
     {
         $stock = StockOpname::findOrFail($id);
+
+        $book = Book::findOrFail($stock->buku_id);
+        $book->update([
+            'jumlah_buku' => $book->jumlah_buku += $stock->jumlah_buku,
+        ]);
         $stock->delete();
 
         return redirect(route('stocks.index'))->with('success', 'Data SO buku berhasil dihapus.');

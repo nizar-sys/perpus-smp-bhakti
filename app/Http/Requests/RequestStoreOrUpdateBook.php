@@ -28,6 +28,7 @@ class RequestStoreOrUpdateBook extends FormRequest
             'nama_pengarang' => 'required|string|max:255',
             'nama_penerbit' => 'required|string|max:255',
             'tahun_terbit' => 'required|numeric|digits:4',
+            'jumlah_buku' => 'required|numeric'
         ];
     }
 
@@ -45,6 +46,8 @@ class RequestStoreOrUpdateBook extends FormRequest
             'tahun_terbit.required' => 'Tahun terbit harus diisi.',
             'tahun_terbit.numeric' => 'Tahun terbit harus berupa angka.',
             'tahun_terbit.digits' => 'Tahun terbit harus berupa 4 digit angka.',
+            'jumlah_buku.required' => 'Jumlah buku harus diisi.',
+            'jumlah_buku.numeric' => 'Jumlah buku harus berupa angka.'
         ];
     }
 }

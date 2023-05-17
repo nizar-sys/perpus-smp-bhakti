@@ -73,6 +73,20 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
+                                    <label for="jumlah_buku">Jumlah Buku</label>
+                                    <input type="number" class="form-control @error('jumlah_buku') is-invalid @enderror" id="jumlah_buku"
+                                        placeholder="Jumlah Buku" value="{{ old('jumlah_buku') }}" name="jumlah_buku">
+
+                                    @error('jumlah_buku')
+                                        <div class="d-block invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-6">
                                 <button type="submit" class="btn btn-sm btn-primary">Tambah</button>
                                 <a href="{{route('books.index')}}" class="btn btn-sm btn-secondary">Kembali</a>

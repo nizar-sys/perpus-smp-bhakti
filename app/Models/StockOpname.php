@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,7 @@ class StockOpname extends Model
         'buku_id',
         'tanggal',
         'keterangan',
+        'jumlah_buku',
     ];
 
     public function buku()
@@ -33,5 +35,14 @@ class StockOpname extends Model
         static::updating(function ($model) {
             $model->updated_at = now();
         });
+    }
+
+    public function selisihBuku(): Attribute
+    {
+        return Attribute::make(
+            function () {
+                return $this->buku->jumlah_buku - $this->jumlah_buku;
+            }
+        );
     }
 }

@@ -26,6 +26,7 @@
                                     <th>Pengarang</th>
                                     <th>Penerbit</th>
                                     <th>Tahun Terbit</th>
+                                    <th>Jumlah Buku</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,7 @@
                                         <td>{{ $book->nama_pengarang }}</td>
                                         <td>{{ $book->nama_penerbit }}</td>
                                         <td>{{ $book->tahun_terbit }}</td>
+                                        <td>{{ $book->jumlah_buku }}</td>
                                         <td class="d-flex jutify-content-center">
                                             <a href="{{route('books.edit', $book->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
                                             <form id="delete-form-{{ $book->id }}" action="{{ route('books.destroy', $book->id) }}" class="d-none" method="post">
@@ -82,18 +84,8 @@
                     className: 'btn btn-danger btn-sm',
                     text: '<i class="fas fa-file-pdf"></i> PDF',
                     exportOptions: {
-                        columns: [0,1,2,3,4]
+                        columns: [0,1,2,3,4, 5]
                     },
-
-                    // print sesuai panjang data
-                    customize: function (doc) {
-                        doc.defaultStyle.fontSize = 8; //2, 3, 4,etc
-                        doc.styles.tableHeader.fontSize = 8; //2, 3, 4, etc
-                        doc.content[1].table.widths = ['10%', '30%', '20%', '20%', '20%'];
-
-                        // print sesuai jumlah panjang data
-
-                    }
                 },
             ],
         });

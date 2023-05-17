@@ -25,6 +25,9 @@
                                     <th>Judul Buku</th>
                                     <th>Tanggal</th>
                                     <th>Keterangan</th>
+                                    <th>Jumlah Saat Ini</th>
+                                    <th>Jumlah SO</th>
+                                    <th>Selisih Jumlah</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -35,6 +38,9 @@
                                         <td>{{ $stock->buku->judul_buku }}</td>
                                         <td>{{ $stock->tanggal }}</td>
                                         <td>{{ $stock->keterangan }}</td>
+                                        <td>{{ $stock->buku->jumlah_buku }}</td>
+                                        <td>{{ $stock->jumlah_buku }}</td>
+                                        <td>{{ $stock->selisihBuku }}</td>
                                         <td class="d-flex jutify-content-center">
                                             <a href="{{route('stocks.edit', $stock->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
                                             <form id="delete-form-{{ $stock->id }}" action="{{ route('stocks.destroy', $stock->id) }}" class="d-none" method="post">
@@ -80,7 +86,7 @@
                     className: 'btn btn-danger btn-sm',
                     text: '<i class="fas fa-file-pdf"></i> PDF',
                     exportOptions: {
-                        columns: [0,1,2,3]
+                        columns: [0,1,2,3,4,5,6]
                     },
                 }
             ],

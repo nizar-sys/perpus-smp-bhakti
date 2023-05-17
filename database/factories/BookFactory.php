@@ -22,6 +22,7 @@ class BookFactory extends Factory
             'nama_pengarang' => $this->faker->name(),
             'nama_penerbit' => $this->faker->company(),
             'tahun_terbit' => $this->faker->year(),
+            'jumlah_buku' => $this->faker->numberBetween(1, 100),
             'created_at' => now(),
         ];
     }

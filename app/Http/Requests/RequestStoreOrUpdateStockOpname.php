@@ -26,6 +26,7 @@ class RequestStoreOrUpdateStockOpname extends FormRequest
         return [
             'buku_id' => 'required|exists:books,id',
             'keterangan' => 'required|string',
+            'jumlah_buku' => 'required|numeric'
         ];
     }
 
@@ -41,6 +42,8 @@ class RequestStoreOrUpdateStockOpname extends FormRequest
             'buku_id.exists' => 'Buku tidak ditemukan.',
             'keterangan.required' => 'Keterangan harus diisi.',
             'keterangan.string' => 'Keterangan harus berupa string.',
+            'jumlah_buku.required' => 'Jumlah buku harus diisi.',
+            'jumlah_buku.numeric' => 'Jumlah buku harus berupa angka.'
         ];
     }
 }

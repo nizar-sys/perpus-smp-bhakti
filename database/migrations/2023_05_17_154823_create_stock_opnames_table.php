@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('buku_id')->references('id')->on('books')->onDelete('cascade')->cascadeOnUpdate();
             $table->date('tanggal');
             $table->longText('keterangan');
+            $table->integer('jumlah_buku');
             $table->timestamps();
         });
     }

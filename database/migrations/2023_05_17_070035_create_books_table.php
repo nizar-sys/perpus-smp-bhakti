@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nama_pengarang');
             $table->string('nama_penerbit');
             $table->string('tahun_terbit');
+            $table->integer('jumlah_buku');
             $table->timestamps();
         });
     }

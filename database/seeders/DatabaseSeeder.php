@@ -23,6 +23,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         Book::factory(100)->create();
         Anggota::factory(1)->create();
-        StockOpname::factory(20)->create();
+        // StockOpname::factory(20)->create();
     }
 }

@@ -41,6 +41,20 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group mb-3">
+                                    <label for="jumlah_buku">Jumlah SO Buku</label>
+                                    <input type="text" class="form-control @error('jumlah_buku') is-invalid @enderror" id="jumlah_buku"
+                                        placeholder="Jumlah SO Buku" value="{{ old('jumlah_buku') }}" name="jumlah_buku">
+
+                                    @error('jumlah_buku')
+                                        <div class="d-block invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
                                     <label for="keterangan">Keterangan SO</label>
                                     <textarea class="form-control @error('keterangan') is-invalid @enderror" id="keterangan"
                                     placeholder="Keterangan SO" name="keterangan" cols="30" rows="10">{{ old('keterangan') }}</textarea>
