@@ -22,6 +22,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>NIS</th>
                                     <th>Nama Anggota</th>
                                     <th>Username</th>
                                     <th>Alamat</th>
@@ -34,6 +35,7 @@
                                 @forelse ($members as $member)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $member->nis }}</td>
                                         <td>{{ $member->nama_anggota }}</td>
                                         <td>{{ $member->user->username }}</td>
                                         <td>{{ $member->alamat }}</td>
@@ -88,7 +90,7 @@
                 text: '<i class="fas fa-file-pdf"></i> PDF',
                 // jangan export kolom aksi
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5]
+                    columns: [0, 1, 2, 3, 4, 5, 6]
                 },
             }, ],
         });

@@ -41,7 +41,7 @@ class StockOpname extends Model
     {
         return Attribute::make(
             function () {
-                return $this->buku->jumlah_buku - $this->jumlah_buku;
+                return ($this->buku->jumlah_buku - $this->jumlah_buku);
             }
         );
     }

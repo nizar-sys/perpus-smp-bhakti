@@ -63,7 +63,7 @@
             <div class="sidenav-header d-flex align-items-center justify-content-center">
                 <a class="navbar-brand"
                     href="{{ route('home') }}">
-                    <img src="{{ asset('/assets/img/brand/blue.png') }}" class="navbar-brand-img" alt="...">
+                    <img src="{{ asset('/uploads/images/html5.png') }}" class="navbar-brand-img" alt="...">
                 </a>
                 <div class="pr-3 sidenav-toggler sidenav-toggler-white d-lg-none" data-action="sidenav-pin"
                     data-target="#sidenav-main">

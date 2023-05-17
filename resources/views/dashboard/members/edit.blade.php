@@ -23,6 +23,20 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group mb-3">
+                                    <label for="nis">NIS Anggota</label>
+                                    <input type="number" class="form-control @error('nis') is-invalid @enderror" id="nis"
+                                        placeholder="NIS Anggota" value="{{ old('nis', $member->nis) }}" name="nis">
+
+                                    @error('nis')
+                                        <div class="d-block invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
                                     <label for="nama_anggota">Nama Anggota</label>
                                     <input type="text" class="form-control @error('nama_anggota') is-invalid @enderror" id="nama_anggota"
                                         placeholder="Nama Anggota" value="{{ old('nama_anggota', $member->nama_anggota) }}" name="nama_anggota">

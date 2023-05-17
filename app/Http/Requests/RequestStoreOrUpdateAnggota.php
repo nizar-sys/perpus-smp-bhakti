@@ -23,12 +23,19 @@ class RequestStoreOrUpdateAnggota extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules =  [
+            'nis' => 'required|numeric|',
             'nama_anggota' => 'required',
             'alamat' => 'required',
             'no_telp' => 'required|digits_between:10,12',
             'tgl_lahir' => 'required|date|before:today',
         ];
+
+        if($this->isMethod('POST')){
+            $rules['nis'] .= '|unique:anggotas,nis';
+        }
+
+        return $rules;
     }
 
     /**
@@ -46,6 +53,9 @@ class RequestStoreOrUpdateAnggota extends FormRequest
             'tgl_lahir.before' => 'Tanggal Lahir harus sebelum hari ini',
             'no_telp.digits_between' => 'No. Telp harus berupa angka dan 10-12 digit',
             'tgl_lair.date' => 'Tanggal Lahir harus berupa tanggal',
+            'nis.required' => 'NIS harus diisi',
+            'nis.unique' => 'NIS sudah terdaftar',
+            'nis.numeric' => 'NIS harus berupa angka',
         ];
     }
 }

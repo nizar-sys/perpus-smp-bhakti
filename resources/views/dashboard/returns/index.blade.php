@@ -19,7 +19,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Judul Buku</th>
-                                    <th>Peminjam</th>
+                                    <th>NIS Peminjam</th>
+                                    <th>Nama Peminjam</th>
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Kembali</th>
                                     <th>Denda</th>
@@ -32,6 +33,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $return->peminjaman->buku->judul_buku }}</td>
+                                        <td>{{ $return->peminjaman->peminjam->nis }}</td>
                                         <td>{{ $return->peminjaman->peminjam->nama_anggota }}</td>
                                         <td>{{ $return->peminjaman->tanggal_pinjam }}</td>
                                         <td>{{ $return->tanggal_kembali }}</td>
@@ -77,7 +79,7 @@
                 className: 'btn btn-danger btn-sm',
                 text: '<i class="fas fa-file-pdf"></i> PDF',
                 exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
                 },
             }, ],
         });

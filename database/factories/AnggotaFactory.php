@@ -18,6 +18,7 @@ class AnggotaFactory extends Factory
     {
         return [
             'user_id' => 3,
+            'nis' => '123343243',
             'nama_anggota' => $this->faker->name(),
             'alamat' => $this->faker->address(),
             'no_telp' => $this->faker->phoneNumber(),

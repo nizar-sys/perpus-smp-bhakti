@@ -42,6 +42,20 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                                         </div>
+                                        <input class="form-control" name="nis" placeholder="NIS Anggota" type="number"
+                                            value="{{ old('nis') }}">
+                                    </div>
+                                    @error('nis')
+                                        <div class="invalid-feedback d-block">*{{ $message }} <i
+                                                class="fas fa-arrow-up"></i></div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        </div>
                                         <input class="form-control" name="nama_anggota" placeholder="Nama Lengkap" type="text"
                                             value="{{ old('nama_anggota') }}">
                                     </div>

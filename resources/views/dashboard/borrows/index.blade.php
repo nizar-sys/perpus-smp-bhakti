@@ -23,7 +23,8 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Judul Buku</th>
-                                    <th>Peminjam</th>
+                                    <th>NIS Peminjam</th>
+                                    <th>Nama Peminjam</th>
                                     <th>Tanggal Pinjam</th>
                                     <th>Status</th>
                                     <th>Petugas</th>
@@ -35,6 +36,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $borrow->buku->judul_buku }}</td>
+                                        <td>{{ $borrow->peminjam->nis }}</td>
                                         <td>{{ $borrow->peminjam->nama_anggota }}</td>
                                         <td>{{ $borrow->tanggal_pinjam }}</td>
                                         <td>{{ $borrow->status_formated }}</td>
@@ -90,7 +92,7 @@
                     className: 'btn btn-danger btn-sm',
                     text: '<i class="fas fa-file-pdf"></i> PDF',
                     exportOptions: {
-                        columns: [0,1,2,3,4, 5]
+                        columns: [0,1,2,3,4,5,6]
                     },
                 },
             ],

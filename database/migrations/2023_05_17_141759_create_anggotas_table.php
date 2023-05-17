@@ -20,6 +20,7 @@ return new class extends Migration
                   ->references('id')->on('users')
                   ->onDelete('cascade')
                   ->cascadeOnUpdate();
+            $table->string('nis')->unique();
             $table->string('nama_anggota');
             $table->string('alamat');
             $table->string('no_telp');
