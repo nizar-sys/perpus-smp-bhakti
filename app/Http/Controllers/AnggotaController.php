@@ -47,7 +47,7 @@ class AnggotaController extends Controller
 
         $user = User::create([
             'name' => $validated['nama_anggota'],
-            'username' => strtolower(str($validated['nama_anggota'])->snake()),
+            'username' => $request->username ?? strtolower(str($validated['nama_anggota'])->snake()),
             'password' => $request->password ?? Hash::make('password'),
             'created_at' => now(),
         ]);
