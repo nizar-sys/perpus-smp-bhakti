@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequestStoreOrUpdateAnggota;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -31,23 +32,22 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(RequestStoreOrUpdateAnggota $request)
     {
-        $request->validate([
-            'username' => ['required', 'string', 'max:255', 'unique:users'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $validated = $request->validated() + [
+            'created_at' => now(),
+        ];
 
         $user = User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validated['nama_anggota'],
+            'username' => $request->username ?? strtolower(str($validated['nama_anggota'])->snake()),
+            'password' => $request->password ?? Hash::make('password'),
+            'created_at' => now(),
         ]);
 
-        event(new Registered($user));
+        $user->member()->updateOrCreate([
+            'user_id' => $user->id,
+        ], $validated);
 
         Auth::login($user);
 

@@ -77,7 +77,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('register', []) }}" class="nav-link">
                             <span class="nav-link-inner--text">Register</span>
                         </a>
                     </li>
