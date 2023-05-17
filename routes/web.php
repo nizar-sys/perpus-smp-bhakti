@@ -7,6 +7,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReturnBookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RouteController;
 
@@ -40,4 +41,5 @@ Route::middleware('auth')->group(function() {
     Route::resource('books', BookController::class);
     Route::resource('members', AnggotaController::class);
     Route::resource('borrows', BorrowController::class);
+    Route::resource('returns', ReturnBookController::class);
 });
