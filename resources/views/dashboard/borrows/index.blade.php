@@ -40,6 +40,12 @@
                                         <td>{{ $borrow->status_formated }}</td>
                                         <td>{{ $borrow->petugas->name }}</td>
                                         <td class="d-flex jutify-content-center">
+                                            @if ($borrow->status == 'dipinjam')
+                                            <form id="return-form-{{ $borrow->id }}" action="{{ route('borrows.return', $borrow->id) }}" class="d-none" method="post">
+                                                @csrf
+                                            </form>
+                                            <button onclick="returnForm('{{$borrow->id}}')" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                                            @endif
                                             <a href="{{route('borrows.edit', $borrow->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
                                             <form id="delete-form-{{ $borrow->id }}" action="{{ route('borrows.destroy', $borrow->id) }}" class="d-none" method="post">
                                                 @csrf
@@ -83,6 +89,21 @@
                 }).then((result) => {
                 if (result.isConfirmed) {
                     $(`#delete-form-${id}`).submit()
+                }
+            })
+        }
+        function returnForm(id){
+            Swal.fire({
+                title: 'Pengembalian Buku',
+                text: "Anda akan mengembalikan buku!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Batal!'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $(`#return-form-${id}`).submit()
                 }
             })
         }

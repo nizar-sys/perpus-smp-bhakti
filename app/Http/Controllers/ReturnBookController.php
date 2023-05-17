@@ -80,9 +80,9 @@ class ReturnBookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RequestStoreOrUpdateReturnBook $request, $id)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validated() + [
+        $validated = $request->all() + [
             'updated_at' => now(),
         ];
 

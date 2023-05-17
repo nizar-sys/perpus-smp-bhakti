@@ -113,4 +113,38 @@ class BorrowController extends Controller
 
         return redirect(route('borrows.index'))->with('success', 'Data peminjaman buku berhasil dihapus.');
     }
+
+    public function returnBook($borrowId)
+    {
+        $borrowDetail = Borrow::findOrFail($borrowId);
+
+        $payloadPengembalianBuku = [
+            'borrow_id' => $borrowDetail->id,
+            'petugas_id' => auth()->user()->id,
+            'tanggal_kembali' => date('Y-m-d'),
+            'denda' => 0,
+            'jumlah_denda' => 0,
+            'created_at' => now(),
+        ];
+
+        // hitung jumlah denda dari tanggal pinjam jika lebih dari 5 hari dari tanggal sekarang
+        $tanggalPinjam = strtotime($borrowDetail->tanggal_pinjam);
+        $tanggalSekarang = strtotime(date('Y-m-d'));
+
+        $selisihHari = ($tanggalSekarang - $tanggalPinjam) / (60 * 60 * 24);
+
+        if ($selisihHari > 5) {
+            $payloadPengembalianBuku['denda'] = 1000;
+            $payloadPengembalianBuku['jumlah_denda'] = ($selisihHari - 5) * 1000;
+        }
+
+        // update status peminjaman buku menjadi kembali
+        $borrowDetail->update([
+            'status' => 'dikembalikan',
+        ]);
+
+        $borrowDetail->pengembalian()->create($payloadPengembalianBuku);
+
+        return redirect(route('returns.index'))->with('success', 'Buku berhasil dikembalikan.');
+    }
 }

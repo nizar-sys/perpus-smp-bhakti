@@ -23,6 +23,7 @@
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Kembali</th>
                                     <th>Denda</th>
+                                    <th>Petugas</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -30,11 +31,12 @@
                                 @forelse ($returns as $return)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $return->borrow->buku->judul_buku }}</td>
-                                        <td>{{ $return->borrow->peminjam->name }}</td>
-                                        <td>{{ $return->tanggal_pinjam }}</td>
+                                        <td>{{ $return->peminjaman->buku->judul_buku }}</td>
+                                        <td>{{ $return->peminjaman->peminjam->nama_anggota }}</td>
+                                        <td>{{ $return->peminjaman->tanggal_pinjam }}</td>
                                         <td>{{ $return->tanggal_kembali }}</td>
-                                        <td>{{ $return->denda }}</td>
+                                        <td>{{ $return->jumlah_denda_formated }}</td>
+                                        <td>{{ $return->petugas->name }}</td>
                                         <td class="d-flex jutify-content-center">
                                             <a href="{{route('returns.edit', $return->id)}}" class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
                                         </td>

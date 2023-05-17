@@ -33,6 +33,11 @@ class Borrow extends Model
         return $this->belongsTo(User::class, 'petugas_id', 'id');
     }
 
+    public function pengembalian()
+    {
+        return $this->hasMany(ReturnBook::class, 'borrow_id', 'id');
+    }
+
     // function boot
     public static function boot()
     {

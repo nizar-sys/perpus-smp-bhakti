@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
     Route::resource('members', AnggotaController::class);
+    Route::post('/borrows/return-book/{borrowId}', [BorrowController::class, 'returnBook'])->name('borrows.return');
     Route::resource('borrows', BorrowController::class);
     Route::resource('returns', ReturnBookController::class);
 });

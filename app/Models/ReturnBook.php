@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +40,12 @@ class ReturnBook extends Model
         self::updating(function ($model) {
             $model->updated_at = now();
         });
+    }
+
+    function jumlahDendaFormated(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => "Rp. " . number_format($this->jumlah_denda, 0, ',', '.'),
+        );
     }
 }
