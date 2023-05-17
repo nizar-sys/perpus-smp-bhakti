@@ -16,6 +16,13 @@
         </a>
     </li>
 @endif
+<li class="nav-item">
+    <a class="nav-link {{ $routeActive == 'books.index' ? 'active' : '' }}" href="{{ route('books.index') }}">
+        <i class="fas fa-book text-dark"></i>
+        <span class="nav-link-text">Data Buku</span>
+    </a>
+</li>
+
 @if (Auth::user()->role == 'petugas')
     <li class="nav-item">
         <a class="nav-link {{ $routeActive == 'members.index' ? 'active' : '' }}" href="{{ route('members.index') }}">
@@ -44,12 +51,6 @@
         </a>
     </li>
 @endif
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'books.index' ? 'active' : '' }}" href="{{ route('books.index') }}">
-        <i class="fas fa-book text-dark"></i>
-        <span class="nav-link-text">Data Buku</span>
-    </a>
-</li>
 <li class="nav-item">
     <a class="nav-link {{ $routeActive == 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">
         <i class="fas fa-user-tie text-success"></i>

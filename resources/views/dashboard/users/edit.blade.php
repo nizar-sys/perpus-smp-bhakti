@@ -66,7 +66,7 @@
                                     <label for="role">Role</label>
                                     <select class="form-control @error('role') is-invalid @enderror" id="role" name="role">
                                         @php
-                                            $roles = ['admin', 'user'];
+                                            $roles = ['admin', 'petugas'];
                                         @endphp
                                         <option value="" selected>---Role---</option>
                                         @foreach ($roles as $role)
