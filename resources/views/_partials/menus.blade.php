@@ -27,6 +27,12 @@
     </a>
 </li>
 <li class="nav-item">
+    <a class="nav-link {{ $routeActive == 'borrows.index' ? 'active' : '' }}" href="{{ route('borrows.index') }}">
+        <i class="fas fa-book text-warning"></i>
+        <span class="nav-link-text">Data Peminjaman Buku</span>
+    </a>
+</li>
+<li class="nav-item">
     <a class="nav-link {{ $routeActive == 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">
         <i class="fas fa-user-tie text-success"></i>
         <span class="nav-link-text">Profile</span>

@@ -4,6 +4,7 @@ use App\Http\Controllers\AnggotaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\DataTableController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -38,4 +39,5 @@ Route::middleware('auth')->group(function() {
     Route::resource('users', UserController::class);
     Route::resource('books', BookController::class);
     Route::resource('members', AnggotaController::class);
+    Route::resource('borrows', BorrowController::class);
 });
