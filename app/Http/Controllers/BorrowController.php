@@ -18,8 +18,7 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        $borrows = Borrow::orderByDesc('id');
-        $borrows = $borrows->paginate(50);
+        $borrows = Borrow::orderByDesc('id')->get();
 
         return view('dashboard.borrows.index', compact('borrows'));
     }

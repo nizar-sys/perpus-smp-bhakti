@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class BookController extends Controller
 {
+    // protect controller
+    public function __construct()
+    {
+        $this->middleware('roles:petugas')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +21,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::orderByDesc('id');
-        $books = $books->paginate(50);
+        $books = Book::orderByDesc('id')->get();
 
         return view('dashboard.books.index', compact('books'));
     }

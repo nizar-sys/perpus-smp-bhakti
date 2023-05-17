@@ -16,8 +16,7 @@ class ReturnBookController extends Controller
      */
     public function index()
     {
-        $returns = ReturnBook::orderByDesc('id');
-        $returns = $returns->paginate(50);
+        $returns = ReturnBook::orderByDesc('id')->get();
 
         return view('dashboard.returns.index', compact('returns'));
     }

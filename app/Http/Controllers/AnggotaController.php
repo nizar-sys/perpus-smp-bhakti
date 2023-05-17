@@ -17,8 +17,7 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        $members = Anggota::orderByDesc('id');
-        $members = $members->paginate(50);
+        $members = Anggota::orderByDesc('id')->get();
 
         return view('dashboard.members.index', compact('members'));
     }

@@ -18,7 +18,7 @@
                 <div class="card-header bg-transparent border-0 text-dark">
                     <h2 class="card-title h3">Data Buku</h2>
                     <div class="table-responsive">
-                        <table class="table table-flush table-hover">
+                        <table class="table table-flush table-hover" id="table-data">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -52,13 +52,6 @@
                                     </tr>
                                 @endforelse
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="4">
-                                        {{ $books->links() }}
-                                    </th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -69,6 +62,42 @@
 
 @section('script')
     <script>
+        var tablePengguna = $('#table-data').DataTable({
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Cari Data",
+                lengthMenu: "Menampilkan _MENU_ data",
+                zeroRecords: "Data tidak ditemukan",
+                infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                infoFiltered: "(disaring dari _MAX_ data)",
+                paginate: {
+                    previous: '<i class="fa fa-angle-left"></i>',
+                    next: "<i class='fa fa-angle-right'></i>",
+                }
+            },
+            dom: 'Blfrtip',
+            buttons: [
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-danger btn-sm',
+                    text: '<i class="fas fa-file-pdf"></i> PDF',
+                    exportOptions: {
+                        columns: [0,1,2,3,4]
+                    },
+
+                    // print sesuai panjang data
+                    customize: function (doc) {
+                        doc.defaultStyle.fontSize = 8; //2, 3, 4,etc
+                        doc.styles.tableHeader.fontSize = 8; //2, 3, 4, etc
+                        doc.content[1].table.widths = ['10%', '30%', '20%', '20%', '20%'];
+
+                        // print sesuai jumlah panjang data
+
+                    }
+                },
+            ],
+        });
+
         function deleteForm(id){
             Swal.fire({
                 title: 'Hapus data',

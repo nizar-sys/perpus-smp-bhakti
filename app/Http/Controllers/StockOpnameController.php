@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class StockOpnameController extends Controller
 {
+    // protect controller
+    public function __construct()
+    {
+        $this->middleware('roles:petugas')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +22,7 @@ class StockOpnameController extends Controller
      */
     public function index()
     {
-        $stocks = StockOpname::orderByDesc('id');
-        $stocks = $stocks->paginate(50);
+        $stocks = StockOpname::orderByDesc('id')->get();
 
         return view('dashboard.stocks.index', compact('stocks'));
     }

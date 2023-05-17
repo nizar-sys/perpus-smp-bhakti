@@ -38,11 +38,20 @@ Route::middleware('auth')->group(function() {
         Route::put('/change-profile', [ProfileController::class, 'changeProfile'])->name('change-profile');
     }); # profile group
 
-    Route::resource('users', UserController::class);
+    Route::middleware('roles:admin')->group(function(){
+        Route::resource('users', UserController::class);
+    });
+
+    Route::middleware('roles:petugas')->group(function(){
+        Route::resource('members', AnggotaController::class);
+        Route::post('/borrows/return-book/{borrowId}', [BorrowController::class, 'returnBook'])->name('borrows.return');
+        Route::resource('borrows', BorrowController::class);
+        Route::resource('returns', ReturnBookController::class);
+    });
+
+    Route::middleware('roles:admin,petugas')->group(function(){
+        Route::resource('stocks', StockOpnameController::class);
+    });
+
     Route::resource('books', BookController::class);
-    Route::resource('members', AnggotaController::class);
-    Route::post('/borrows/return-book/{borrowId}', [BorrowController::class, 'returnBook'])->name('borrows.return');
-    Route::resource('borrows', BorrowController::class);
-    Route::resource('returns', ReturnBookController::class);
-    Route::resource('stocks', StockOpnameController::class);
 });

@@ -8,40 +8,46 @@
         <span class="nav-link-text">Dashboard</span>
     </a>
 </li>
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
-        <i class="fas fa-users text-warning"></i>
-        <span class="nav-link-text">Users</span>
-    </a>
-</li>
+@if (Auth::user()->role == 'admin')
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'users.index' ? 'active' : '' }}" href="{{ route('users.index') }}">
+            <i class="fas fa-users text-warning"></i>
+            <span class="nav-link-text">Users</span>
+        </a>
+    </li>
+@endif
+@if (Auth::user()->role == 'petugas')
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'members.index' ? 'active' : '' }}" href="{{ route('members.index') }}">
+            <i class="fas fa-users text-primary"></i>
+            <span class="nav-link-text">Data Anggota</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'borrows.index' ? 'active' : '' }}" href="{{ route('borrows.index') }}">
+            <i class="fas fa-book text-warning"></i>
+            <span class="nav-link-text">Data Peminjaman Buku</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'returns.index' ? 'active' : '' }}" href="{{ route('returns.index') }}">
+            <i class="fas fa-book text-danger"></i>
+            <span class="nav-link-text">Data Pengembalian Buku</span>
+        </a>
+    </li>
+@endif
+@if (Auth::user()->role != 'pengunjung')
+    <li class="nav-item">
+        <a class="nav-link {{ $routeActive == 'stocks.index' ? 'active' : '' }}" href="{{ route('stocks.index') }}">
+            <i class="fas fa-book text-primary"></i>
+            <span class="nav-link-text">Data SO Buku</span>
+        </a>
+    </li>
+@endif
 <li class="nav-item">
     <a class="nav-link {{ $routeActive == 'books.index' ? 'active' : '' }}" href="{{ route('books.index') }}">
         <i class="fas fa-book text-dark"></i>
         <span class="nav-link-text">Data Buku</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'members.index' ? 'active' : '' }}" href="{{ route('members.index') }}">
-        <i class="fas fa-users text-primary"></i>
-        <span class="nav-link-text">Data Anggota</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'borrows.index' ? 'active' : '' }}" href="{{ route('borrows.index') }}">
-        <i class="fas fa-book text-warning"></i>
-        <span class="nav-link-text">Data Peminjaman Buku</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'returns.index' ? 'active' : '' }}" href="{{ route('returns.index') }}">
-        <i class="fas fa-book text-danger"></i>
-        <span class="nav-link-text">Data Pengembalian Buku</span>
-    </a>
-</li>
-<li class="nav-item">
-    <a class="nav-link {{ $routeActive == 'stocks.index' ? 'active' : '' }}" href="{{ route('stocks.index') }}">
-        <i class="fas fa-book text-primary"></i>
-        <span class="nav-link-text">Data SO Buku</span>
     </a>
 </li>
 <li class="nav-item">
