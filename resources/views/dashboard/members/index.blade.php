@@ -42,6 +42,8 @@
                                         <td>{{ $member->no_telp }}</td>
                                         <td>{{ $member->tgl_lahir }}</td>
                                         <td class="d-flex jutify-content-center">
+                                            <a href="{{ route('members.print-out', $member->id) }}"
+                                                class="btn btn-sm btn-danger" target="_blank"><i class="fas fa-file"></i></a>
                                             <a href="{{ route('members.edit', $member->id) }}"
                                                 class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
                                             <form id="delete-form-{{ $member->id }}"

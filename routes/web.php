@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function() {
         Route::resource('users', UserController::class);
     });
 
+    Route::get('/members/print-out/{memberId}', [AnggotaController::class, 'printCard'])->name('members.print-out');
     Route::middleware('roles:petugas')->group(function(){
         Route::resource('members', AnggotaController::class);
         Route::post('/borrows/return-book/{borrowId}', [BorrowController::class, 'returnBook'])->name('borrows.return');
