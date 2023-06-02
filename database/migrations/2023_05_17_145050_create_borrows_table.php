@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('petugas_id');
             $table->foreign('petugas_id')->references('id')->on('users')->onDelete('cascade')->cascadeOnUpdate();
             $table->date('tanggal_pinjam');
+            $table->date('tanggal_wajib_kembali');
             $table->enum('status', ['dipinjam', 'dikembalikan'])->default('dipinjam');
             $table->timestamps();
         });

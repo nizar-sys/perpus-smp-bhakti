@@ -22,6 +22,25 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group mb-3">
+                                    <label for="book_category_id">Kategori Buku</label>
+                                    <select class="form-control @error('book_category_id') is-invalid @enderror" id="book_category_id" name="book_category_id">
+                                        <option value="" selected>---Kategori Buku---</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}" @if (old('book_category_id') == $category->id) selected @endif>
+                                                {{ $category->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('book_category_id')
+                                        <div class="d-block invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group mb-3">
                                     <label for="judul_buku">Judul Buku</label>
                                     <input type="text" class="form-control @error('judul_buku') is-invalid @enderror" id="judul_buku"
                                         placeholder="Judul Buku" value="{{ old('judul_buku') }}" name="judul_buku">

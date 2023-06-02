@@ -15,6 +15,7 @@ class Borrow extends Model
         'peminjam_id',
         'petugas_id',
         'tanggal_pinjam',
+        'tanggal_wajib_kembali',
         'status',
     ];
 
@@ -43,12 +44,12 @@ class Borrow extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->petugas_id = auth()->user()->id;
+            $model->petugas_id = auth()->user()->role == 'pengunjung' ? 1 : auth()->user()->id;
             $model->created_at = now();
         });
 
         self::updating(function ($model) {
-            $model->petugas_id = auth()->user()->id;
+            $model->petugas_id = auth()->user()->role == 'pengunjung' ? 1 : auth()->user()->id;
             $model->updated_at = now();
         });
     }

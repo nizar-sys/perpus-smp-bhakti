@@ -70,7 +70,7 @@
                                         <option value="" selected>---Role---</option>
                                         @foreach ($roles as $role)
                                             <option value="{{ $role }}" @if (old('role') == $role) selected @endif>
-                                                {{ $role }}</option>
+                                                {{ $role == 'admin' ? "Kepala Perpus" : $role }}</option>
                                         @endforeach
                                     </select>
 

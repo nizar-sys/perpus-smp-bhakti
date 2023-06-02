@@ -26,6 +26,7 @@
                                     <th>NIS Peminjam</th>
                                     <th>Nama Peminjam</th>
                                     <th>Tanggal Pinjam</th>
+                                    <th>Tanggal Wajib Kembali</th>
                                     <th>Status</th>
                                     <th>Petugas</th>
                                     <th>Aksi</th>
@@ -39,6 +40,7 @@
                                         <td>{{ $borrow->peminjam->nis }}</td>
                                         <td>{{ $borrow->peminjam->nama_anggota }}</td>
                                         <td>{{ $borrow->tanggal_pinjam }}</td>
+                                        <td>{{ $borrow->tanggal_wajib_kembali }}</td>
                                         <td>{{ $borrow->status_formated }}</td>
                                         <td>{{ $borrow->petugas->name }}</td>
                                         <td class="d-flex jutify-content-center">
@@ -92,7 +94,7 @@
                     className: 'btn btn-danger btn-sm',
                     text: '<i class="fas fa-file-pdf"></i> PDF',
                     exportOptions: {
-                        columns: [0,1,2,3,4,5,6]
+                        columns: [0,1,2,3,4,5,6, 7]
                     },
                 },
             ],

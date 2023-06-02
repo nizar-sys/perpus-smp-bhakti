@@ -23,6 +23,10 @@ class Anggota extends Model
         'tgl_lahir',
     ];
 
+    protected $appends = [
+        'isVisited'
+    ];
+
     // function boot
     protected static function boot()
     {
@@ -40,5 +44,15 @@ class Anggota extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function visitor()
+    {
+        return $this->hasOne(Visitor::class, 'anggota_id', 'id');
+    }
+
+    public function getIsVisitedAttribute()
+    {
+        return $this->visitor()->exists();
     }
 }

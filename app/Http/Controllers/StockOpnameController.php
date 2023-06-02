@@ -62,7 +62,14 @@ class StockOpnameController extends Controller
         $stock = StockOpname::create($validated);
         $book->update([
             'jumlah_buku' => $book->jumlah_buku - $request->jumlah_buku,
+            'available' => 'y',
         ]);
+
+        if ($book->jumlah_buku == 0) {
+            $book->update([
+                'available' => 'n',
+            ]);
+        }
 
         return redirect(route('stocks.index'))->with('success', 'Data SO buku berhasil ditambahkan.');
     }
@@ -118,7 +125,14 @@ class StockOpnameController extends Controller
 
         $book->update([
             'jumlah_buku' => $book->jumlah_buku += $jumlahSOAwal - $jumlahSOBaru,
+            'available' => 'y'
         ]);
+
+        if ($book->jumlah_buku == 0) {
+            $book->update([
+                'available' => 'n',
+            ]);
+        }
 
         return redirect(route('stocks.index'))->with('success', 'Data SO buku berhasil diperbarui.');
     }
@@ -136,6 +150,7 @@ class StockOpnameController extends Controller
         $book = Book::findOrFail($stock->buku_id);
         $book->update([
             'jumlah_buku' => $book->jumlah_buku += $stock->jumlah_buku,
+            'available' => 'y'
         ]);
         $stock->delete();
 

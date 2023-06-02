@@ -18,6 +18,7 @@ class BookFactory extends Factory
     {
         return [
             'kode_buku' => 'BK-' . time(),
+            'book_category_id' => $this->faker->numberBetween(1, 50),
             'judul_buku' => $this->faker->sentence(3),
             'nama_pengarang' => $this->faker->name(),
             'nama_penerbit' => $this->faker->company(),

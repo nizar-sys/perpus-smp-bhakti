@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Data Pengembalian Buku')
+@section('title', 'Data Peminjaman Buku')
 
-@section('title-header', 'Data Pengembalian Buku')
+@section('title-header', 'Data Peminjaman Buku')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-    <li class="breadcrumb-item active">Data Pengembalian Buku</li>
+    <li class="breadcrumb-item active">Data Peminjaman Buku</li>
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-header bg-transparent border-0 text-dark">
-                    <h2 class="card-title h3">Data Pengembalian Buku</h2>
+                    <h2 class="card-title h3">Data Peminjaman Buku</h2>
                     <div class="table-responsive">
                         <table class="table table-flush table-hover" id="table-data">
                             <thead>
@@ -23,28 +23,21 @@
                                     <th>Nama Peminjam</th>
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Wajib Kembali</th>
-                                    <th>Tanggal Kembali</th>
-                                    <th>Denda</th>
+                                    <th>Status</th>
                                     <th>Petugas</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($returns as $return)
+                                @forelse ($borrows as $borrow)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $return->peminjaman->buku->judul_buku }}</td>
-                                        <td>{{ $return->peminjaman->peminjam->nis }}</td>
-                                        <td>{{ $return->peminjaman->peminjam->nama_anggota }}</td>
-                                        <td>{{ $return->peminjaman->tanggal_pinjam }}</td>
-                                        <td>{{ $return->peminjaman->tanggal_wajib_kembali }}</td>
-                                        <td>{{ $return->tanggal_kembali }}</td>
-                                        <td>{{ $return->jumlah_denda_formated }}</td>
-                                        <td>{{ $return->petugas->name }}</td>
-                                        <td class="d-flex jutify-content-center">
-                                            <a href="{{ route('returns.edit', $return->id) }}"
-                                                class="btn btn-sm btn-warning"><i class="fas fa-pencil-alt"></i></a>
-                                        </td>
+                                        <td>{{ $borrow->buku->judul_buku }}</td>
+                                        <td>{{ $borrow->peminjam->nis }}</td>
+                                        <td>{{ $borrow->peminjam->nama_anggota }}</td>
+                                        <td>{{ $borrow->tanggal_pinjam }}</td>
+                                        <td>{{ $borrow->tanggal_wajib_kembali }}</td>
+                                        <td>{{ $borrow->status_formated }}</td>
+                                        <td>{{ $borrow->petugas->name }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -62,7 +55,7 @@
 
 @section('script')
     <script>
-        var tablePengguna = $('#table-data').DataTable({
+                var tablePengguna = $('#table-data').DataTable({
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Cari Data",
@@ -76,14 +69,16 @@
                 }
             },
             dom: 'Blfrtip',
-            buttons: [{
-                extend: 'pdf',
-                className: 'btn btn-danger btn-sm',
-                text: '<i class="fas fa-file-pdf"></i> PDF',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+            buttons: [
+                {
+                    extend: 'pdf',
+                    className: 'btn btn-danger btn-sm',
+                    text: '<i class="fas fa-file-pdf"></i> PDF',
+                    exportOptions: {
+                        columns: [0,1,2,3,4,5,6, 7]
+                    },
                 },
-            }, ],
+            ],
         });
     </script>
 @endsection

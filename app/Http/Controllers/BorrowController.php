@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RequestStoreOrUpdateBorrow;
 use App\Models\Anggota;
 use App\Models\Book;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class BorrowController extends Controller
@@ -30,7 +31,7 @@ class BorrowController extends Controller
      */
     public function create()
     {
-        $books = Book::orderByDesc('id')->get();
+        $books = Book::whereAvailable('y')->orderByDesc('id')->get();
         $members = Anggota::orderByDesc('id')->get();
 
         return view('dashboard.borrows.create', compact('books', 'members'));
@@ -46,9 +47,17 @@ class BorrowController extends Controller
     {
         $validated = $request->validated() + [
             'created_at' => now(),
+            'tanggal_wajib_kembali' => Carbon::parse($request->tanggal_pinjam)->addDays(7),
         ];
 
         $borrow = Borrow::create($validated);
+
+        // update jumlah_buku
+        $book = Book::findOrFail($request->buku_id);
+
+        $book->update([
+            'jumlah_buku' => $book->jumlah_buku - 1,
+        ]);
 
         return redirect(route('borrows.index'))->with('success', 'Data peminjaman buku berhasil ditambahkan.');
     }
@@ -73,7 +82,7 @@ class BorrowController extends Controller
     public function edit($id)
     {
         $borrow = Borrow::findOrFail($id);
-        $books = Book::orderByDesc('id')->get();
+        $books = Book::whereAvailable('y')->orderByDesc('id')->get();
         $members = Anggota::orderByDesc('id')->get();
 
         return view('dashboard.borrows.edit', compact('borrow', 'books', 'members'));
@@ -90,6 +99,7 @@ class BorrowController extends Controller
     {
         $validated = $request->validated() + [
             'updated_at' => now(),
+            'tanggal_wajib_kembali' => Carbon::parse($request->tanggal_pinjam)->addDays(7),
         ];
 
         $borrow = Borrow::findOrFail($id);
@@ -117,32 +127,34 @@ class BorrowController extends Controller
     {
         $borrowDetail = Borrow::findOrFail($borrowId);
 
+        $tanggalKembali = date('Y-m-d');
+
+        // Menghitung selisih hari antara tanggal wajib kembali dan tanggal sekarang
+        $selisihHari = strtotime($tanggalKembali) - strtotime($borrowDetail->tanggal_wajib_kembali);
+        $telatHari = floor($selisihHari / (60 * 60 * 24));
+
+        $denda = 500 * $telatHari;
+
         $payloadPengembalianBuku = [
             'borrow_id' => $borrowDetail->id,
             'petugas_id' => auth()->user()->id,
-            'tanggal_kembali' => date('Y-m-d'),
-            'denda' => 0,
-            'jumlah_denda' => 0,
+            'tanggal_kembali' => $tanggalKembali,
+            'denda' => $denda,
+            'jumlah_denda' => $denda,
             'created_at' => now(),
         ];
-
-        // hitung jumlah denda dari tanggal pinjam jika lebih dari 5 hari dari tanggal sekarang
-        $tanggalPinjam = strtotime($borrowDetail->tanggal_pinjam);
-        $tanggalSekarang = strtotime(date('Y-m-d'));
-
-        $selisihHari = ($tanggalSekarang - $tanggalPinjam) / (60 * 60 * 24);
-
-        if ($selisihHari > 5) {
-            $payloadPengembalianBuku['denda'] = 1000;
-            $payloadPengembalianBuku['jumlah_denda'] = ($selisihHari - 5) * 1000;
-        }
-
-        // update status peminjaman buku menjadi kembali
         $borrowDetail->update([
             'status' => 'dikembalikan',
         ]);
 
         $borrowDetail->pengembalian()->create($payloadPengembalianBuku);
+
+        // update jumlah_buku
+        $book = Book::findOrFail($borrowDetail->buku_id);
+
+        $book->update([
+            'jumlah_buku' => $book->jumlah_buku + 1,
+        ]);
 
         return redirect(route('returns.index'))->with('success', 'Buku berhasil dikembalikan.');
     }

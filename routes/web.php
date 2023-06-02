@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnggotaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\BookCategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\DataTableController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ReturnBookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\StockOpnameController;
+use App\Http\Controllers\VisitorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +45,7 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::get('/members/print-out/{memberId}', [AnggotaController::class, 'printCard'])->name('members.print-out');
-    Route::middleware('roles:petugas')->group(function(){
+    Route::middleware('roles:petugas,admin')->group(function(){
         Route::resource('members', AnggotaController::class);
         Route::post('/borrows/return-book/{borrowId}', [BorrowController::class, 'returnBook'])->name('borrows.return');
         Route::resource('borrows', BorrowController::class);
@@ -52,7 +54,13 @@ Route::middleware('auth')->group(function() {
 
     Route::middleware('roles:admin,petugas')->group(function(){
         Route::resource('stocks', StockOpnameController::class);
+        Route::resource('visitors', VisitorController::class);
+        Route::resource('categories', BookCategoryController::class);
     });
 
+    Route::get('/books/borrows', [BookController::class, 'borrows'])->name('books.borrow.index');
+    Route::get('/books/borrows/{id}', [BookController::class, 'borrowBook'])->name('books.borrow');
+    Route::post('/books/borrows/{id}', [BookController::class, 'borrow'])->name('books.borrow.store');
     Route::resource('books', BookController::class);
+    Route::resource('visitors', VisitorController::class)->only(['store']);
 });

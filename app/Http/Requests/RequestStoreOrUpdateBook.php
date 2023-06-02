@@ -24,6 +24,7 @@ class RequestStoreOrUpdateBook extends FormRequest
     public function rules()
     {
         return [
+            'book_category_id' => 'required|exists:book_categories,id',
             'judul_buku' => 'required|string|max:255',
             'nama_pengarang' => 'required|string|max:255',
             'nama_penerbit' => 'required|string|max:255',
@@ -40,6 +41,8 @@ class RequestStoreOrUpdateBook extends FormRequest
     public function messages()
     {
         return [
+            'book_category_id.required' => 'Kategori buku harus diisi.',
+            'book_category_id.exists' => 'Kategori buku tidak ditemukan.',
             'judul_buku.required' => 'Judul buku harus diisi.',
             'nama_pengarang.required' => 'Nama pengarang harus diisi.',
             'nama_penerbit.required' => 'Nama penerbit harus diisi.',

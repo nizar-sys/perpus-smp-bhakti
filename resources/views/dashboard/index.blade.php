@@ -5,8 +5,7 @@
 @endphp
 
 @section('breadcrumb')
-<li class="breadcrumb-item active"><a
-href="{{ route('home') }}">Dashboard</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('home') }}">Dashboard</a></li>
 @endsection
 
 @section('content')
@@ -83,4 +82,55 @@ href="{{ route('home') }}">Dashboard</a></li>
             </div>
         </div>
     </div>
+
+    @if (Auth::user()->role == 'pengunjung' && !Auth::user()->member->isVisited)
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent border-0 text-dark">
+                        <h5 class="mb-0">Formulir Tambah Data Kunjungan</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ route('visitors.store') }}" method="POST" role="form"
+                            enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="nis">NIS Anggota</label>
+                                        <input type="number" class="form-control @error('nis') is-invalid @enderror"
+                                            id="nis" placeholder="NIS Anggota" value="{{ old('nis') }}"
+                                            name="nis">
+
+                                        @error('nis')
+                                            <div class="d-block invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="tanggal">Tanggal Kunjungan</label>
+                                        <input type="date" class="form-control @error('tanggal') is-invalid @enderror"
+                                            id="tanggal" placeholder="Tanggal Kunjungan" value="{{ old('tanggal') }}"
+                                            name="tanggal">
+
+                                        @error('tanggal')
+                                            <div class="d-block invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-sm btn-primary">Tambah</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection

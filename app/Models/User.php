@@ -36,6 +36,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [
+        'role_new'
+    ];
+
     /**
      * The attributes that should be cast.
      *
@@ -48,5 +52,13 @@ class User extends Authenticatable
     public function member()
     {
         return $this->hasOne(Anggota::class, 'user_id', 'id');
+    }
+
+    public function getRoleNewAttribute()
+    {
+        if($this->role == 'admin'){
+            return 'Kepala Perpus';
+    }
+        return $this->role;
     }
 }

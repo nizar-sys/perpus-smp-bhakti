@@ -9,7 +9,11 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['kode_buku', 'judul_buku', 'nama_pengarang', 'nama_penerbit', 'tahun_terbit', 'jumlah_buku'];
+    protected $fillable = ['book_category_id','kode_buku', 'judul_buku', 'nama_pengarang', 'nama_penerbit', 'tahun_terbit', 'jumlah_buku', 'available'];
+
+    protected $appends = [
+        'available_text'
+    ];
 
     // function boot
     public static function boot()
@@ -23,5 +27,15 @@ class Book extends Model
         self::updating(function ($model) {
             $model->updated_at = now();
         });
+    }
+
+    function getAvailableTextAttribute()
+    {
+        return $this->available == 'y' ? 'Tersedia' : 'Tidak Tersedia';
+    }
+
+    function category()
+    {
+        return $this->belongsTo(BookCategory::class, 'book_category_id', 'id');
     }
 }

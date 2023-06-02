@@ -15,12 +15,15 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('book_category_id');
+            $table->foreign('book_category_id')->references('id')->on('book_categories')->onDelete('cascade')->cascadeOnUpdate();
             $table->string('kode_buku');
             $table->string('judul_buku');
             $table->string('nama_pengarang');
             $table->string('nama_penerbit');
             $table->string('tahun_terbit');
             $table->integer('jumlah_buku');
+            $table->enum('available', ['y', 'n'])->default('y');
             $table->timestamps();
         });
     }

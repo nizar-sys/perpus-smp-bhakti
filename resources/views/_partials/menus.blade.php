@@ -16,12 +16,43 @@
         </a>
     </li>
 @endif
+
+@if (Auth::user()->role != 'pengunjung')
+<li class="nav-item">
+    <a class="nav-link {{ $routeActive == 'visitors.index' ? 'active' : '' }}" href="{{ route('visitors.index') }}">
+        <i class="fas fa-users text-dark"></i>
+        <span class="nav-link-text">Data Kunjungan</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ $routeActive == 'categories.index' ? 'active' : '' }}" href="{{ route('categories.index') }}">
+        <i class="fas fa-book text-success"></i>
+        <span class="nav-link-text">Data Kategori Buku</span>
+    </a>
+</li>
+@endif
+
 <li class="nav-item">
     <a class="nav-link {{ $routeActive == 'books.index' ? 'active' : '' }}" href="{{ route('books.index') }}">
         <i class="fas fa-book text-dark"></i>
         <span class="nav-link-text">Data Buku</span>
     </a>
 </li>
+
+@if (Auth::user()->role == 'pengunjung')
+<li class="nav-item">
+    <a class="nav-link {{ $routeActive == 'books.borrow.index' ? 'active' : '' }}" href="{{ route('books.borrow.index') }}">
+        <i class="fas fa-book text-warning"></i>
+        <span class="nav-link-text">Data Peminjaman Buku</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ $routeActive == 'members.print-out' ? 'active' : '' }}" href="{{ route('members.print-out', Auth::user()->member->id) }}" target="_blank">
+        <i class="fas fa-file text-danger"></i>
+        <span class="nav-link-text">Print Kartu Anggota</span>
+    </a>
+</li>
+@endif
 
 @if (Auth::user()->role == 'petugas')
     <li class="nav-item">
@@ -30,6 +61,8 @@
             <span class="nav-link-text">Data Anggota</span>
         </a>
     </li>
+@endif
+@if (Auth::user()->role != 'pengunjung')
     <li class="nav-item">
         <a class="nav-link {{ $routeActive == 'borrows.index' ? 'active' : '' }}" href="{{ route('borrows.index') }}">
             <i class="fas fa-book text-warning"></i>
@@ -42,8 +75,6 @@
             <span class="nav-link-text">Data Pengembalian Buku</span>
         </a>
     </li>
-@endif
-@if (Auth::user()->role != 'pengunjung')
     <li class="nav-item">
         <a class="nav-link {{ $routeActive == 'stocks.index' ? 'active' : '' }}" href="{{ route('stocks.index') }}">
             <i class="fas fa-book text-primary"></i>
