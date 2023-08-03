@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $validated['nama_anggota'],
             'username' => $request->username ?? strtolower(str($validated['nama_anggota'])->snake()),
-            'password' => $request->password ?? Hash::make('password'),
+            'password' => Hash::make($request->password) ?? Hash::make('password'),
             'created_at' => now(),
         ]);
 
