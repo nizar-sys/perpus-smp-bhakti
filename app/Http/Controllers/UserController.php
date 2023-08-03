@@ -51,6 +51,8 @@ class UserController extends Controller
             $request->avatar->move(public_path('uploads/images'), $fileName);
         }
 
+        $validated['password'] = Hash::make($validated['password']);
+
         $user = User::create($validated);
 
         return redirect(route('users.index'))->with('success', 'User berhasil ditambahkan.');
